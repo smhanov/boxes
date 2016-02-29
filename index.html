@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<textarea id="code" style="width:100%;height:30em">
+var red = makeBox("red");
+var blue = makeBox("blue");
+var green = makeBox("green");
+
+var container = makeBox("rgba(0,0,0,0.1)");
+
+container.widthEquals(s, 1000);
+container.heightEquals(s, 500);
+
+red.widthAtLeast(s, 100);
+red.heightAtLeast(s, 100);
+
+blue.widthAtLeast(s, 100);
+blue.heightAtLeast(s, 100);
+
+blue.rightOf(s, red, 10)
+blue.alignRight(s, container, 10);
+green.sameHeight(s, red);
+green.alignLeft(s, red);
+green.alignRight(s, blue);
+green.under(s, red, 10);
+</textarea><br>
+<button onclick="run()">Run</button>
+<button onclick="getCode('code-stress')">Stress test</button>
+Solution took <span id="time">0</span>ms
+<br>
+
+<textarea id="code-stress" style="display:none">
+// participant
+var part1 = makeBox("red");
+part1.widthEquals(s, 100);
+part1.heightAtLeast(s, 50);
+
+var part2 = makeBox("blue");
+part2.widthEquals(s, 120);
+part2.heightAtLeast(s, 70);
+part2.sameHeight(s, part1);
+part2.rightOf(s, part1, 20);
+part2.horizontalAlign(s, part1);
+
+var prev = part2;
+
+for (i = 0; i < 1000; i++) {
+    var signal = makeBox("green");
+    signal.heightAtLeast(s, 2);
+    signal.widthAtLeast(s, Math.min(600, 200+i*100));
+    signal.under(s, prev, 2);
+    signal.alignLeftEdgeToCentreOf(s, part1);
+    signal.alignRightEdgeToCentreOf(s, part2);
+
+    prev = signal;
+}
+
+</textarea>
+
+<script src="c.min.js"></script>
+<script src="Box.js"></script>
+<script src="main.js"></script>
